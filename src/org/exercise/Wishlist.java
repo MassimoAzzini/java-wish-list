@@ -1,14 +1,25 @@
 package org.exercise;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 
 public class Wishlist {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
         List<Gift> wishList = new ArrayList<>();
+
+        try (Scanner fileReader = new Scanner(new File("./resources/wishList.txt"))) {
+            while (fileReader.hasNextLine()) {
+                Gift gift = new Gift(fileReader.nextLine());
+                wishList.add(gift);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
 
         boolean end = false;
 
